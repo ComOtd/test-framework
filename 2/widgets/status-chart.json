@@ -1,1 +1,1 @@
-[{"uid":"c0db4d1281c85780","name":"testPetsByActiveStatusWithSchema()","time":{"start":1684169189914,"stop":1684169193071,"duration":3157},"status":"passed","severity":"normal"}]
+[{"uid":"8f4c93df5986dddc","name":"Проверка findByStatus со статусом available","time":{"start":1684170290055,"stop":1684170294517,"duration":4462},"status":"failed","severity":"normal"}]

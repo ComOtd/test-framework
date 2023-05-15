@@ -1,2 +1,2 @@
 "Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Mon May 15 16:46:29 GMT 2023","Mon May 15 16:46:33 GMT 2023","3157","","pro.axenix.TestSecond","","pro.axenix.TestSecond","testPetsByActiveStatusWithSchema","testPetsByActiveStatusWithSchema()",""
+"failed","Mon May 15 17:04:50 GMT 2023","Mon May 15 17:04:54 GMT 2023","4462","","Проверка petstore API","","pro.axenix.TestSecond","testPetsByActiveStatusWithSchema","Проверка findByStatus со статусом available",""

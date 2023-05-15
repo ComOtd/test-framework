@@ -1,1 +1,1 @@
-{"total":1,"items":[{"uid":"b214598d7f16e0fb2ab8dd8937ce8729","name":"pro.axenix.TestSecond","statistic":{"failed":0,"broken":0,"skipped":0,"passed":1,"unknown":0,"total":1}}]}
+{"total":1,"items":[{"uid":"7f0054d6962efb7867e2566d8f604b33","name":"Проверка petstore API","statistic":{"failed":1,"broken":0,"skipped":0,"passed":0,"unknown":0,"total":1}}]}
