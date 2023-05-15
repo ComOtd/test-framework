@@ -1,0 +1,4 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Mon May 15 13:21:04 GMT 2023","Mon May 15 13:21:07 GMT 2023","2589","","pro.axenix.TestSecond","","pro.axenix.TestSecond","testPetsByActiveStatusWithSchema","testPetsByActiveStatusWithSchema()",""
+"broken","Mon May 15 13:20:59 GMT 2023","Mon May 15 13:21:03 GMT 2023","4035","","Первые UI тесты","","pro.axenix.TestFirst","testLogin","Проверка успешной авторизации",""
+"passed","Mon May 15 13:20:58 GMT 2023","Mon May 15 13:20:58 GMT 2023","58","","pro.axenix.testdata.TemplateTest","","pro.axenix.testdata.TemplateTest","testFill","testFill()",""
