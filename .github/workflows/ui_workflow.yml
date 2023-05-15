@@ -1,0 +1,83 @@
+name: Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      browser:
+        type: choice
+        description: Which browser to test
+        required: true
+        options:
+          - chrome
+          - firefox
+      tags:
+        description: Test scenario tags
+        required: true
+        type: string
+
+jobs:
+  autotests:
+    name: run tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup MySql
+        uses: mirromutth/mysql-action@v1.1
+        with:
+          character set server: 'utf8'
+          collation server: 'utf8_general_ci'
+          mysql version: '8.0'
+          mysql database: 'some_test'
+          mysql root password: root
+
+      - name: Setup JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Setup Chrome
+        if: ${{ github.event.inputs.browser == 'chrome' }}
+        uses: browser-actions/setup-chrome@latest
+
+      - name: Setup Firefox
+        if: ${{ github.event.inputs.browser == 'firefox' }}
+        uses: browser-actions/setup-firefox@latest
+
+      - name: Run Test
+        if: always()
+        run: mvn test -Dselenide.browser=${{ github.event.inputs.browser }} -Dgroups=${{ github.event.inputs.tags }} -f pom.xml
+        continue-on-error: true
+
+      - name: Save results
+        uses: actions/upload-artifact@v2
+        with:
+          name: allure-results
+          path: target/allure-results
+
+      - name: Get Allure history
+        uses: actions/checkout@v2
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Generate allure report
+        uses: simple-elf/allure-report-action@master
+        if: always()
+        id: allure-report
+        with:
+          allure_results: ./target/allure-results
+          gh_pages: gh-pages
+          allure_report: allure-report
+          allure_history: allure-history
+
+      - name: Deploy report to Github Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v2
+        env:
+          PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: allure-history
