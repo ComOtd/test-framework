@@ -1,4 +1,2 @@
 "Epic","Feature","Story","FAILED","BROKEN","PASSED","SKIPPED","UNKNOWN"
-"","","","0","0","1","0","0"
-"Test for test-framework ","UI tests","Simple Login","0","0","1","0","0"
-"Test for test-framework","Http tests","Test Pets By Active Status","1","0","0","0","0"
+"Test for test-framework ","UI tests","Simple Login","1","0","0","0","0"
