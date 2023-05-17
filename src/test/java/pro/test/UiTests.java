@@ -12,7 +12,10 @@ import pro.test.configuration.*;
 import pro.test.ui.AllureUILogger;
 import pro.test.ui.page.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.time.Duration;
 
 import static com.codeborne.selenide.Condition.*;
@@ -175,8 +178,8 @@ class UiTests {
         String fileName = "sample.txt";
         UploadPage uploadPage = Allure.step("Открыть страницу File Uploader",
                 () -> open(configuration.getHttpHostUrl("upload"), UploadPage.class));
-        Allure.step("Проверить, что находимся на странице File Uploader",()-> $x("//h3").shouldHave(text("File Uploader")));
-        Allure.step("Загрузить файл на сайт", () -> uploadPage.uploadFile(path, fileName));
+        Allure.step("Проверить, что находимся на странице File Uploader", () -> $x("//h3").shouldHave(text("File Uploader")));
+        uploadPage.uploadFile(path, fileName);
         Allure.step("Нажать на кнопку upload", () -> $("#file-submit").click());
         Allure.step("Проверить, что файл загружен успешно", () -> {
             $("h3").shouldHave(text("File Uploaded!"));
@@ -189,11 +192,16 @@ class UiTests {
     @Story("Download file")
     @DisplayName("Проверка работы c загрузкой файлов")
     void testDownload() {
-        String filename = "testUpload.json";
+        String filename = "test.txt";
+        String content = "test 1";
         DownloadPage downloadPage = Allure.step("Открыть страницу File Downloader",
                 () -> open(configuration.getHttpHostUrl("download"), DownloadPage.class));
-        Allure.step("Проверить, что находимся на странице File Downloader",()-> $x("//h3").shouldHave(text("File Downloader")));
-        Allure.step("Загрузить файл на сайт", () -> downloadPage.downloadFile(filename));
+        Allure.step("Проверить, что находимся на странице File Downloader", () -> $x("//h3").shouldHave(text("File Downloader")));
+        File file = downloadPage.downloadFile(filename);
+        Allure.step("Проверить содержимое скачанного файла", () -> {
+            String fileContent = Files.readString(file.toPath());
+            Assertions.assertEquals(fileContent, content, "Содержимое файла не совпадает с эталонным значением");
+        });
     }
 }
 
