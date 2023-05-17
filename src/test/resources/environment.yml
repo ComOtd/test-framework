@@ -3,6 +3,22 @@ http:
     url: https://petstore.swagger.io/v2/pet/findByStatus
   - name: login
     url: http://the-internet.herokuapp.com/login
+  - name: checkboxes
+    url: http://the-internet.herokuapp.com/checkboxes
+  - name: dropdown
+    url: http://the-internet.herokuapp.com/dropdown
+  - name: context_menu
+    url: http://the-internet.herokuapp.com/context_menu
+  - name: drag_and_drop
+    url: http://the-internet.herokuapp.com/drag_and_drop
+  - name: hidden_element
+    url: http://the-internet.herokuapp.com/dynamic_loading/1
+  - name: rendered_element
+    url: http://the-internet.herokuapp.com/dynamic_loading/2
+  - name: upload
+    url: http://the-internet.herokuapp.com/upload
+  - name: download
+    url: http://the-internet.herokuapp.com/download
 
 database:
   - name: db_test
