@@ -7,13 +7,8 @@ import java.io.File;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$x;
 
 public class UploadPage {
-    @Step("Проверка заголовка")
-    public void checkHeader() {
-        $x("//h3").shouldHave(text("File Uploader"));
-    }
 
     @Step("Загрузить файл на сайт")
     public void uploadFile(String path, String filename) {

@@ -8,10 +8,6 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class DropdownPage {
-    @Step("Проверка заголовка")
-    public void checkHeader() {
-        $x("//h3").shouldHave(text("Dropdown List"));
-    }
 
     @Step("Установить значение {value} у выпадающего списка")
     public void setDropdown(String value) {

@@ -15,9 +15,10 @@ import pro.test.ui.AllureUILogger;
 import pro.test.ui.page.*;
 
 import java.io.IOException;
+import java.time.Duration;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selenide.*;
 
 @Epic("Test for test-framework ")
 @Feature("UI tests")
@@ -36,7 +37,6 @@ class UiTests {
     static void before() throws IOException {
         configuration = new EnvironmentConfigurationProvider().get();
     }
-
 
     @Test
     @Link(type = "tms", name = "b9c6565c-3b25-40b1-a7b1-8f37bc31c1a5", value = "Тест из TMS")
@@ -62,7 +62,7 @@ class UiTests {
     void testCheckboxes(int checkboxNumber) {
         CheckBoxesPage checkBoxesPage = Allure.step("Открыть страницу checkBoxes",
                 () -> open(configuration.getHttpHostUrl("checkboxes"), CheckBoxesPage.class));
-        checkBoxesPage.checkHeader();
+        $x("//h3").shouldHave(text("Checkboxes"));
         Allure.step("Проставить checkboxes в состояние false", () -> checkBoxesPage.setCheckBox(false, checkboxNumber));
         Allure.step("Проставить checkboxes в состояние true", () -> {
             checkBoxesPage.setCheckBox(true, checkboxNumber);
@@ -76,7 +76,7 @@ class UiTests {
     void testDropdown() {
         DropdownPage dropdownPage = Allure.step("Открыть страницу dropdown",
                 () -> open(configuration.getHttpHostUrl("dropdown"), DropdownPage.class));
-        dropdownPage.checkHeader();
+        $x("//h3").shouldHave(text("Dropdown List"));
         Allure.step("Заполнить dropdown элемент значением Option 1", () -> dropdownPage.setDropdown("Option 1"));
         Allure.step("Заполнить dropdown элемент значением Option 2", () -> dropdownPage.setDropdown("Option 2"));
     }
@@ -88,7 +88,7 @@ class UiTests {
     void testDragAndDrop() {
         DragAndDropPage dragAndDropPage = Allure.step("Открыть страницу dragAndDrop",
                 () -> open(configuration.getHttpHostUrl("drag_and_drop"), DragAndDropPage.class));
-        dragAndDropPage.checkHeader();
+        $x("//h3").shouldHave(text("Drag and Drop"));
         Allure.step("Переместить А к В", dragAndDropPage::dragAndDropAB);
     }
 
@@ -99,7 +99,7 @@ class UiTests {
     void testContextMenu() {
         ContextMenuPage contextMenuPage = Allure.step("Открыть страницу ContextMenu",
                 () -> open(configuration.getHttpHostUrl("context_menu"), ContextMenuPage.class));
-        contextMenuPage.checkHeader();
+        $x("//h3").shouldHave(text("Context Menu"));
         Allure.step("Вызвать контекстное меню", contextMenuPage::callContextMenu);
         Allure.step("Проверить текст всплывающего окна", contextMenuPage::checkPopUp);
         Allure.step("Закрыть всплывающее окно", contextMenuPage::acceptPopUp);
@@ -113,9 +113,9 @@ class UiTests {
         int waitingTime = 30;
         HiddenDynamicallyElementPage hiddenElementPage = Allure.step("Открыть страницу HiddenDynamicallyElement",
                 () -> open(configuration.getHttpHostUrl("hidden_element"), HiddenDynamicallyElementPage.class));
-        hiddenElementPage.checkHeader();
+        $x("//h4").shouldHave(text("Example 1: Element on page that is hidden"));
         Allure.step("Нажать на кнопку Старт", hiddenElementPage::clickStartButton);
-        Allure.step(String.format("Ожидать появления элемента в течение %d секунд", waitingTime), () -> hiddenElementPage.waitHelloWorld(waitingTime));
+        Allure.step("После окончания загрузки, проверить наличие записи 'Hello World'", () -> {$("#finish > h4").shouldBe(visible, Duration.ofSeconds(waitingTime));});
     }
 
     @Test
@@ -126,9 +126,11 @@ class UiTests {
         int waitingTime = 30;
         RenderedDynamicallyElementPage renderedElementPage = Allure.step("Открыть страницу RenderedDynamicallyElement",
                 () -> open(configuration.getHttpHostUrl("rendered_element"), RenderedDynamicallyElementPage.class));
-        renderedElementPage.checkHeader();
+        $x("//h4").shouldHave(text("Example 2: Element rendered after the fact"));
         Allure.step("Нажать на кнопку Старт", renderedElementPage::clickStartButton);
-        Allure.step(String.format("Ожидать появления элемента в течение %d секунд", waitingTime), () -> renderedElementPage.waitHelloWorld(waitingTime));
+        Allure.step("После окончания загрузки, проверить наличие записи 'Hello World'", () -> {
+            $("#finish > h4").shouldBe(exist, Duration.ofSeconds(waitingTime)).shouldBe(visible);
+        });
     }
 
     @Test
@@ -140,7 +142,7 @@ class UiTests {
         String filename = "sample.txt";
         UploadPage uploadPage = Allure.step("Открыть страницу File Uploader",
                 () -> open(configuration.getHttpHostUrl("upload"), UploadPage.class));
-        uploadPage.checkHeader();
+        $x("//h3").shouldHave(text("File Uploader"));
         Allure.step("Загрузить файл на сайт", () -> uploadPage.uploadFile(path, filename));
         Allure.step("Нажать на кнопку upload", uploadPage::clickUploadButton);
         Allure.step("Проверить, что файл загружен успешно", () -> uploadPage.checkUploadFile(filename));
@@ -154,7 +156,7 @@ class UiTests {
         String filename = "testUpload.json";
         DownloadPage downloadPage = Allure.step("Открыть страницу File Uploader",
                 () -> open(configuration.getHttpHostUrl("download"), DownloadPage.class));
-        downloadPage.checkHeader();
+        $x("//h3").shouldHave(text("File Downloader"));
         Allure.step("Загрузить файл на сайт", () -> downloadPage.downloadFile(filename));
     }
 }

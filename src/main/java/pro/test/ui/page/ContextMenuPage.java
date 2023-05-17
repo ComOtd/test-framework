@@ -4,14 +4,9 @@ import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 
 public class ContextMenuPage {
-    @Step("Проверка заголовка")
-    public void checkHeader() {
-        $x("//h3").shouldHave(text("Context Menu"));
-    }
 
     @Step("Вызвать контекстное меню")
     public void callContextMenu() {
