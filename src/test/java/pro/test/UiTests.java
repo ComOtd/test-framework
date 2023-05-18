@@ -1,7 +1,6 @@
 package pro.test;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +12,6 @@ import pro.test.ui.AllureUILogger;
 import pro.test.ui.page.*;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.time.Duration;
@@ -61,9 +59,8 @@ class UiTests {
     @Story("Checkboxes")
     @DisplayName("Проверка работы Checkboxes")
     void testCheckboxes(int checkboxNumber) {
-        Allure.step("Открыть страницу checkBoxes",
-                () -> open(configuration.getHttpHostUrl("checkboxes")));
-        Allure.step("Проверить, что находимся на странице checkBoxes", () -> {
+        Allure.step("Открыть страницу checkBoxes", () -> {
+            open(configuration.getHttpHostUrl("checkboxes"));
             $x("//h3").shouldHave(text("Checkboxes"));
         });
         Allure.step("Проставить checkboxes в состояние false", () -> {
@@ -87,20 +84,18 @@ class UiTests {
     @Story("Dropdown List")
     @DisplayName("Проверка работы Dropdown")
     void testDropdown() {
-        Allure.step("Открыть страницу dropdown", () -> open(configuration.getHttpHostUrl("dropdown")));
-        Allure.step("Проверить, что находимся на странице dropdown", () -> $x("//h3").shouldHave(text("Dropdown List")));
-        Allure.step("Заполнить dropdown элемент значением Option 1", () -> {
-                    SelenideElement dropdownElement = $(By.id("dropdown"));
-                    dropdownElement.selectOption("Option 1");
-                    dropdownElement.shouldHave(text("Option 1"));
-                }
-        );
-        Allure.step("Заполнить dropdown элемент значением Option 1", () -> {
-                    SelenideElement dropdownElement = $(By.id("dropdown"));
-                    dropdownElement.selectOption("Option 2");
-                    dropdownElement.shouldHave(text("Option 2"));
-                }
-        );
+        Allure.step("Открыть страницу dropdown", () -> {
+            open(configuration.getHttpHostUrl("dropdown"));
+            $x("//h3").shouldHave(text("Dropdown List"));
+        });
+        Allure.step("Заполнить dropdown элемент значением Option 1", () ->
+                $(By.id("dropdown")).selectOption("Option 1"));
+        Allure.step("Проверить, что текст соответствует Option 1", () ->
+                $(By.id("dropdown")).shouldHave(text("Option 1")));
+        Allure.step("Заполнить dropdown элемент значением Option 2", () ->
+                $(By.id("dropdown")).selectOption("Option 2"));
+        Allure.step("Проверить, что текст соответствует Option 2", () ->
+                $(By.id("dropdown")).shouldHave(text("Option 2")));
     }
 
     @Test
@@ -108,9 +103,10 @@ class UiTests {
     @Story("Drag and Drop")
     @DisplayName("Проверка работы DragAndDrop")
     void testDragAndDrop() {
-        Allure.step("Открыть страницу dragAndDrop",
-                () -> open(configuration.getHttpHostUrl("drag_and_drop")));
-        Allure.step("Проверить, что находимся на странице dragAndDrop", () -> $x("//h3").shouldHave(text("Drag and Drop")));
+        Allure.step("Открыть страницу dragAndDrop", () -> {
+            open(configuration.getHttpHostUrl("drag_and_drop"));
+            $x("//h3").shouldHave(text("Drag and Drop"));
+        });
         Allure.step("Поменять местами сектора A и B", () -> {
             $("#column-a > header").shouldHave(text("A"));
             $("#column-b > header").shouldHave(text("B"));
@@ -125,9 +121,10 @@ class UiTests {
     @Story("Context Menu")
     @DisplayName("Проверка работы с ContextMenu")
     void testContextMenu() {
-        Allure.step("Открыть страницу ContextMenu",
-                () -> open(configuration.getHttpHostUrl("context_menu")));
-        Allure.step("Проверить, что находимся на странице ContextMenu", () -> $x("//h3").shouldHave(text("Context Menu")));
+        Allure.step("Открыть страницу ContextMenu", () -> {
+            open(configuration.getHttpHostUrl("context_menu"));
+            $x("//h3").shouldHave(text("Context Menu"));
+        });
         Allure.step("Вызвать контекстное меню", () -> $(By.id("hot-spot")).contextClick());
         Allure.step("Проверить текст всплывающего окна", () -> Assertions.assertEquals(switchTo().alert().getText(), "You selected a context menu"));
         Allure.step("Закрыть всплывающее окно", () -> switchTo().alert().accept());
@@ -139,9 +136,10 @@ class UiTests {
     @DisplayName("Проверка работы со скрытыми элементами")
     void testHidden() {
         int waitingTime = 30;
-        Allure.step("Открыть страницу HiddenDynamicallyElement",
-                () -> open(configuration.getHttpHostUrl("hidden_element")));
-        Allure.step("Проверить, что находимся на странице HiddenDynamicallyElement", () -> $x("//h4").shouldHave(text("Example 1: Element on page that is hidden")));
+        Allure.step("Открыть страницу HiddenDynamicallyElement", () -> {
+            open(configuration.getHttpHostUrl("hidden_element"));
+            $x("//h4").shouldHave(text("Example 1: Element on page that is hidden"));
+        });
         Allure.step("Нажать на кнопку Старт", () -> {
             $("#start > button").click();
             $("#loading").shouldBe(visible);
@@ -157,9 +155,10 @@ class UiTests {
     @DisplayName("Проверка работы c подгружаемыми элементами")
     void testRendered() {
         int waitingTime = 30;
-        Allure.step("Открыть страницу RenderedDynamicallyElement",
-                () -> open(configuration.getHttpHostUrl("rendered_element")));
-        Allure.step("Проверить, что находимся на странице HiddenDynamicallyElement", () -> $x("//h4").shouldHave(text("Example 2: Element rendered after the fact")));
+        Allure.step("Открыть страницу RenderedDynamicallyElement", () -> {
+            open(configuration.getHttpHostUrl("rendered_element"));
+            $x("//h4").shouldHave(text("Example 2: Element rendered after the fact"));
+        });
         Allure.step("Нажать на кнопку Старт", () -> {
             $("#start > button").click();
             $("#loading").shouldBe(visible);
@@ -176,9 +175,11 @@ class UiTests {
     void testUpload() {
         String path = "src/test/resources/ui/";
         String fileName = "sample.txt";
-        UploadPage uploadPage = Allure.step("Открыть страницу File Uploader",
-                () -> open(configuration.getHttpHostUrl("upload"), UploadPage.class));
-        Allure.step("Проверить, что находимся на странице File Uploader", () -> $x("//h3").shouldHave(text("File Uploader")));
+        UploadPage uploadPage = new UploadPage();
+        Allure.step("Открыть страницу File Uploader", () -> {
+            open(configuration.getHttpHostUrl("upload"));
+            $x("//h3").shouldHave(text("File Uploader"));
+        });
         uploadPage.uploadFile(path, fileName);
         Allure.step("Нажать на кнопку upload", () -> $("#file-submit").click());
         Allure.step("Проверить, что файл загружен успешно", () -> {
@@ -194,9 +195,11 @@ class UiTests {
     void testDownload() {
         String filename = "test.txt";
         String content = "test 1";
-        DownloadPage downloadPage = Allure.step("Открыть страницу File Downloader",
-                () -> open(configuration.getHttpHostUrl("download"), DownloadPage.class));
-        Allure.step("Проверить, что находимся на странице File Downloader", () -> $x("//h3").shouldHave(text("File Downloader")));
+        DownloadPage downloadPage = new DownloadPage();
+        Allure.step("Открыть страницу File Downloader", () -> {
+            open(configuration.getHttpHostUrl("download"));
+            $x("//h3").shouldHave(text("File Downloader"));
+        });
         File file = downloadPage.downloadFile(filename);
         Allure.step("Проверить содержимое скачанного файла", () -> {
             String fileContent = Files.readString(file.toPath());

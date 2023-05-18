@@ -9,12 +9,12 @@ import static com.codeborne.selenide.Selenide.$x;
 
 public class DownloadPage {
 
-    @Step("Загрузить файл {fileName}")
+    @Step("Скачать файл {fileName}")
     public File downloadFile(String fileName) {
         try {
             return $x(String.format("//a[text()='%s']", fileName)).download();
         } catch (FileNotFoundException e) {
-            throw new AssertionError("Ошибка загрузки файла",e);
+            throw new AssertionError("Возникла ошибка при скачивании файла", e);
         }
     }
 }
