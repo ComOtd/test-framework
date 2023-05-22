@@ -1,6 +1,10 @@
 http:
   - name: pets_by_status
     url: https://petstore.swagger.io/v2/pet/findByStatus
+  - name: pet
+    url: https://petstore.swagger.io/v2/pet
+  - name: petId
+    url: https://petstore.swagger.io/v2/pet/{petId}
   - name: login
     url: http://the-internet.herokuapp.com/login
   - name: checkboxes
