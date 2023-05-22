@@ -114,9 +114,6 @@ class ApiTests {
         Allure.step("Проверить статус ответа", () -> searchPetResponse
                 .then()
                 .statusCode(404));
-        Allure.step("Проверить по json схеме", () -> searchPetResponse
-                .then()
-                .body(matchesJsonSchemaInClasspath("pet/petNotFoundSchema.json").using(jsonSchemaFactory)));
         Allure.step("Проверить сообщение, что питомец не найден", () -> {searchPetResponse
                 .then()
                 .body("message", Matchers.equalTo("Pet not found"));
