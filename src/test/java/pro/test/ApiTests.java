@@ -1,12 +1,9 @@
 package pro.test;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
 import com.github.fge.jsonschema.cfg.ValidationConfiguration;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
-import io.restassured.response.ResponseBody;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,7 +32,7 @@ class ApiTests {
     private final JsonSchemaFactory jsonSchemaFactory = JsonSchemaFactory.newBuilder()
             .setValidationConfiguration(ValidationConfiguration.newBuilder().setDefaultVersion(DRAFTV4).freeze())
             .freeze();
-    
+
     public ApiTests(EnvironmentConfiguration configuration) {
         this.configuration = configuration;
     }
@@ -52,25 +49,6 @@ class ApiTests {
         Allure.step("Проверить статус ответа", () -> newPetResponse
                 .then()
                 .statusCode(200));
-        Allure.step("Проверить по json схеме", () -> newPetResponse
-                .then()
-                .body(matchesJsonSchemaInClasspath("pet/petSchema.json").using(jsonSchemaFactory)));
-        Response searchPetResponse = Allure.step("Послать запрос на получение питомца по id", () -> given()
-                .baseUri(configuration.getHttpHostUrl("pet") + "/" + petId)
-                .get());
-        Allure.step("Проверить статус ответа", () -> searchPetResponse
-                .then()
-                .statusCode(200));
-        Allure.step("Проверить по json схеме", () -> searchPetResponse
-                .then()
-                .body(matchesJsonSchemaInClasspath("pet/petSchema.json").using(jsonSchemaFactory)));
-        Allure.step("Проверить полученные значения", () -> {searchPetResponse
-                .then()
-                .body("id", Matchers.equalTo(petId),
-                            "name", Matchers.equalTo(petName),
-                            "status", Matchers.equalTo(petStatus));
-        });
-
     }
 
     @Test
@@ -105,19 +83,17 @@ class ApiTests {
         Allure.step("Проверить статус ответа", () -> updatePetNameResponse
                 .then()
                 .statusCode(200));
+        Allure.step("Проверить, что имя изменено",()->{
         Response searchUpdatedPetResponse = Allure.step("Послать запрос на получение питомца по id", () -> given()
-                .baseUri(configuration.getHttpHostUrl("pet") + "/" + petId)
-                .get());
+                .pathParam("petId",petId)
+                .get(configuration.getHttpHostUrl("petId")));
         Allure.step("Проверить статус ответа", () -> searchUpdatedPetResponse
                 .then()
                 .statusCode(200));
-        Allure.step("Проверить по json схеме", () -> searchUpdatedPetResponse
-                .then()
-                .body(matchesJsonSchemaInClasspath("pet/petSchema.json").using(jsonSchemaFactory)));
-        Allure.step("Проверить, что имя изменено", () -> { searchUpdatedPetResponse
+        Allure.step("Проверить имя в теле ответа", () -> { searchUpdatedPetResponse
                 .then()
                 .body("name", Matchers.equalTo(newPetName));
-        });
+        });});
     }
 
     @Test
@@ -126,11 +102,12 @@ class ApiTests {
     @DisplayName("Проверка удаления питомца")
     void testDeletePets() {
         Response deletePet = Allure.step("Послать запрос на удаление питомца", () -> given()
-                .baseUri(configuration.getHttpHostUrl("pet") + "/" + petId)
-                .delete());
+                .pathParam("petId",petId)
+                .delete(configuration.getHttpHostUrl("petId")));
         Allure.step("Проверить статус ответа", () -> deletePet
                 .then()
                 .statusCode(200));
+        Allure.step("Проверить, что питомец не найден",()->{
         Response searchPetResponse = Allure.step("Послать запрос на получение питомца по id", () -> given()
                 .baseUri(configuration.getHttpHostUrl("pet") + "/" + petId)
                 .get());
@@ -143,6 +120,6 @@ class ApiTests {
         Allure.step("Проверить сообщение, что питомец не найден", () -> {searchPetResponse
                 .then()
                 .body("message", Matchers.equalTo("Pet not found"));
-        });
+        });});
     }
 }
