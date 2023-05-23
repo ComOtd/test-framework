@@ -1,0 +1,2 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"broken","Tue May 23 17:48:47 GMT 2023","Tue May 23 17:48:47 GMT 2023","1","","Первые SQL тесты","","pro.test.SQLTest","","Первые SQL тесты",""
