@@ -1,0 +1,5 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Tue May 23 22:09:58 GMT 2023","Tue May 23 22:09:58 GMT 2023","10","","Первые SQL тесты","","pro.test.SQLTest","checkSQL","checkSQL()",""
+"broken","Tue May 23 22:09:58 GMT 2023","Tue May 23 22:09:58 GMT 2023","56","","Первые SQL тесты","","pro.test.SQLTest","deleteSQL","deleteSQL()",""
+"broken","Tue May 23 22:09:58 GMT 2023","Tue May 23 22:09:58 GMT 2023","46","","Первые SQL тесты","","pro.test.SQLTest","checkSQLJoin","checkSQLJoin()",""
+"broken","Tue May 23 22:09:57 GMT 2023","Tue May 23 22:09:58 GMT 2023","65","","Первые SQL тесты","","pro.test.SQLTest","updateSQL","updateSQL()",""
