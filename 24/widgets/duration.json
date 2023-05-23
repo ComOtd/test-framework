@@ -1,1 +1,1 @@
-[{"uid":"71529ca43db1e7d0","name":"Проверка успешной авторизации","time":{"start":1684168830994,"stop":1684168841325,"duration":10331},"status":"failed","severity":"normal"}]
+[{"uid":"9aa0a2326e48f114","name":"checkSQL()","time":{"start":1684866319728,"stop":1684866319759,"duration":31},"status":"passed","severity":"normal"},{"uid":"11246c209aba3efa","name":"checkSQLJoin()","time":{"start":1684866319326,"stop":1684866319524,"duration":198},"status":"broken","severity":"normal"}]
