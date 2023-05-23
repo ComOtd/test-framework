@@ -1,1 +1,0 @@
-INSERT INTO documents (doc_id, doc_series,doc_num,employee_id) VALUES (777,4444,666666,TO_DATE('17/12/2015','DD/MM/YYYY'),12345)
