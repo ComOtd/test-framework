@@ -1,1 +1,1 @@
-{"64a6fb9b52720c5ea464f89dc4f0c854":{"statistic":{"failed":0,"broken":0,"skipped":0,"passed":2,"unknown":0,"total":2},"items":[{"uid":"cf5cf73bd2d39a32","reportUrl":"https://ComOtd.github.io/test-framework/22//#testresult/cf5cf73bd2d39a32","status":"passed","time":{"start":1684168052896,"stop":1684168060721,"duration":7825}},{"uid":"6cfde142d7463e47","reportUrl":"https://ComOtd.github.io/test-framework/21//#testresult/6cfde142d7463e47","status":"passed","time":{"start":1684166943868,"stop":1684166949006,"duration":5138}}]}}
+{}
