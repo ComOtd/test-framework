@@ -1,1 +1,1 @@
-[{"uid":"622c3e5873d523f9","name":"Проверка успешной авторизации","time":{"start":1684162104896,"stop":1684162113173,"duration":8277},"status":"passed","severity":"normal"}]
+[{"uid":"248f6654e8132f0d","name":"Первые SQL тесты","time":{"start":1684828827297,"stop":1684828827298,"duration":1},"status":"broken","severity":"normal"}]
