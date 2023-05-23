@@ -1,0 +1,1 @@
+INSERT INTO employee (fullname,employee_id) VALUES ('Миханюк Лариса Аромовна',12345)
