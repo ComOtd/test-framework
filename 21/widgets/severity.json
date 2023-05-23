@@ -1,1 +1,0 @@
-[{"uid":"723b06ed190f83a0","name":"checkSQL()","time":{"start":1684865666654,"stop":1684865666689,"duration":35},"status":"passed","severity":"normal"},{"uid":"d0739d29888c1f9b","name":"checkSQLJoin()","time":{"start":1684865666280,"stop":1684865666371,"duration":91},"status":"broken","severity":"normal"}]
