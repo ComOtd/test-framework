@@ -1,0 +1,2 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Tue May 23 21:32:17 GMT 2023","Tue May 23 21:32:17 GMT 2023","109","","Первые SQL тесты","","pro.test.SQLTest","checkSQL","checkSQL()",""
