@@ -1,0 +1,4 @@
+SELECT user.create_date,documents.original_flg,employee.license_flg
+FROM user
+JOIN documents ON documents.doc_id = user.doc_id
+JOIN employee ON employee.employee_id = documents.employee_id WHERE user.name='Иван' 
