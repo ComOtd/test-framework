@@ -1,2 +1,2 @@
 "Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Mon May 15 15:14:48 GMT 2023","Mon May 15 15:14:56 GMT 2023","8584","","Первые UI тесты","","pro.axenix.TestFirst","testLogin","Проверка успешной авторизации",""
+"broken","Tue May 23 17:33:32 GMT 2023","Tue May 23 17:33:32 GMT 2023","2","","Первые SQL тесты","","pro.test.SQLTest","","Первые SQL тесты",""
