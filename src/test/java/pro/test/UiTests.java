@@ -22,6 +22,7 @@ import static com.codeborne.selenide.Selenide.*;
 @Epic("Test for test-framework ")
 @Feature("UI tests")
 @Owner("Osipov Semen")
+@Tag("All")
 @DisplayName("Первые UI тесты")
 @ExtendWith({CredentialsParameter.class, AllureUILogger.class})
 class UiTests {

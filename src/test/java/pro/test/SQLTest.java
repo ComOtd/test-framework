@@ -22,6 +22,7 @@ import java.sql.Timestamp;
 @Epic("Test for test-framework ")
 @Feature("SQL tests")
 @Owner("Osipov Semen")
+@Tag("All")
 @DisplayName("Первые SQL тесты")
 @ExtendWith(EnvironmentConfigurationParameter.class)
 class SQLTest {
@@ -105,33 +106,26 @@ class SQLTest {
     @Tag("SQL")
     @DisplayName("Удаление записей")
     void deleteSQL() {
-        Allure.step("Проверить количество записей в таблице user", () -> {
-            connectionSource.statement(st -> {
-                String countUser = "SELECT COUNT(*) as count FROM user WHERE name = 'Виктор'";
-                Allure.addAttachment("countUser", countUser);
-                ResultSet resultSet = st.executeQuery(countUser);
-                Assertions.assertTrue(resultSet.next(), "Пустой результат");
-                Assertions.assertEquals(1, resultSet.getInt("count"), "Неверное количество записей");
-            });
-        });
-        Allure.step("Удалить запись", () -> {
-
-            connectionSource.statement(st -> {
-                String deleteUser =
-                        "DELETE FROM user WHERE name ='Виктор'";
-                Allure.addAttachment("deleteUser", deleteUser);
-                st.execute(deleteUser);
-            });
-        });
-        Allure.step("Проверить количество записей в таблице user", () -> {
-            connectionSource.statement(st -> {
-                String countUser = "SELECT COUNT(*) as count FROM user WHERE name = 'Виктор'";
-                Allure.addAttachment("countUser", countUser);
-                ResultSet resultSet = st.executeQuery(countUser);
-                Assertions.assertTrue(resultSet.next(), "Пустой результат");
-                Assertions.assertEquals(0, resultSet.getInt("count"), "Неверное количество записей");
-            });
-        });
+        Allure.step("Проверить количество записей в таблице user", () -> connectionSource.statement(st -> {
+            String countUser = "SELECT COUNT(*) as count FROM user WHERE name = 'Виктор'";
+            Allure.addAttachment("countUser", countUser);
+            ResultSet resultSet = st.executeQuery(countUser);
+            Assertions.assertTrue(resultSet.next(), "Пустой результат");
+            Assertions.assertEquals(1, resultSet.getInt("count"), "Неверное количество записей");
+        }));
+        Allure.step("Удалить запись", () -> connectionSource.statement(st -> {
+            String deleteUser =
+                    "DELETE FROM user WHERE name ='Виктор'";
+            Allure.addAttachment("deleteUser", deleteUser);
+            st.execute(deleteUser);
+        }));
+        Allure.step("Проверить количество записей в таблице user", () -> connectionSource.statement(st -> {
+            String countUser = "SELECT COUNT(*) as count FROM user WHERE name = 'Виктор'";
+            Allure.addAttachment("countUser", countUser);
+            ResultSet resultSet = st.executeQuery(countUser);
+            Assertions.assertTrue(resultSet.next(), "Пустой результат");
+            Assertions.assertEquals(0, resultSet.getInt("count"), "Неверное количество записей");
+        }));
     }
 
     @Test
@@ -140,22 +134,18 @@ class SQLTest {
     void updateSQL() {
         String oldName = "Владимир";
         String newName = "Всеволод";
-        Allure.step("Изменить имя", () -> {
-            connectionSource.statement(st -> {
-                String updateUser =
-                        String.format("UPDATE user SET name = '%s' WHERE name='%s'", newName, oldName);
-                Allure.addAttachment("updateUser", updateUser);
-                st.execute(updateUser);
-            });
-        });
-        Allure.step("Проверить новое имя", () -> {
-            connectionSource.statement(st -> {
-                String selectNameUser = "SELECT name FROM user WHERE doc_id = 9999";
-                Allure.addAttachment("selectNameUser", selectNameUser);
-                ResultSet resultSet = st.executeQuery(selectNameUser);
-                Assertions.assertTrue(resultSet.next(), "Пустой результат");
-                Assertions.assertEquals(newName, resultSet.getString("name"), "Имя не соответствует ожидаемому");
-            });
-        });
+        Allure.step("Изменить имя", () -> connectionSource.statement(st -> {
+            String updateUser =
+                    String.format("UPDATE user SET name = '%s' WHERE name='%s'", newName, oldName);
+            Allure.addAttachment("updateUser", updateUser);
+            st.execute(updateUser);
+        }));
+        Allure.step("Проверить новое имя", () -> connectionSource.statement(st -> {
+            String selectNameUser = "SELECT name FROM user WHERE doc_id = 9999";
+            Allure.addAttachment("selectNameUser", selectNameUser);
+            ResultSet resultSet = st.executeQuery(selectNameUser);
+            Assertions.assertTrue(resultSet.next(), "Пустой результат");
+            Assertions.assertEquals(newName, resultSet.getString("name"), "Имя не соответствует ожидаемому");
+        }));
     }
 }
