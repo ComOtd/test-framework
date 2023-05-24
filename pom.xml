@@ -17,11 +17,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
+<!--   junit     -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>5.9.2</version>
-            
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -33,20 +33,22 @@
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.9.2</version>
         </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>2.0.7</version>
-        </dependency>
+<!--    jackson    -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.14.1</version>
         </dependency>
+
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-yaml</artifactId>
             <version>2.14.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>2.0.7</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -54,6 +56,7 @@
             <version>1.18.24</version>
             <scope>provided</scope>
         </dependency>
+<!--    Data Base    -->
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
@@ -69,6 +72,7 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.28</version>
         </dependency>
+<!--   rest-assured     -->
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
@@ -79,11 +83,13 @@
             <artifactId>json-schema-validator</artifactId>
             <version>5.3.0</version>
         </dependency>
+<!--    selenide    -->
         <dependency>
             <groupId>com.codeborne</groupId>
             <artifactId>selenide</artifactId>
             <version>6.12.3</version>
         </dependency>
+<!--   allure     -->
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-junit5</artifactId>
@@ -99,20 +105,19 @@
             <artifactId>allure-rest-assured</artifactId>
             <version>${allure.version}</version>
         </dependency>
-
+<!--    awaitility для условных ожиданий    -->
         <dependency>
             <groupId>org.awaitility</groupId>
             <artifactId>awaitility</artifactId>
             <version>4.2.0</version>
         </dependency>
-
-
+<!--    kafka-clients    -->
         <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-clients</artifactId>
             <version>3.4.0</version>
         </dependency>
-
+<!--   generex - генерация тестовых данных по regexp     -->
         <dependency>
             <groupId>com.github.mifmif</groupId>
             <artifactId>generex</artifactId>
@@ -146,6 +151,10 @@
                             <name>listener</name>
                             <value>io.qameta.allure.junit5.AllureJunit5</value>
                         </property>
+                        <configurationParameters>
+                            junit.jupiter.execution.parallel.enabled=true
+                            junit.jupiter.execution.parallel.mode.default=concurrent
+                        </configurationParameters>
                     </properties>
                     <systemProperties>
                         <property>

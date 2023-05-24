@@ -20,13 +20,13 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 @Epic("Test for test-framework")
 @Feature("Http tests")
 @Tag("First")
+@Tag("All")
 @Owner("Osipov Semen")
 @ExtendWith({HttpBaseSpecification.class,
         EnvironmentConfigurationParameter.class})
 @DisplayName("Проверка petstore API")
 class ApiTests {
     private final EnvironmentConfiguration configuration;
-    private final String petName = "Varya";
     private int petId;
     private final String petStatus = "available";
     private final JsonSchemaFactory jsonSchemaFactory = JsonSchemaFactory.newBuilder()
@@ -39,7 +39,8 @@ class ApiTests {
 
     @BeforeEach
     void createPet() {
-        petId = new Random().ints(0, 100000).findFirst().getAsInt();
+        petId = new Random().ints(0, 100000).findFirst().orElse(0);
+        String petName = "Varya";
         String newPetJson = String.format("{\"id\": %d,\"name\":\"%s\",\"status\":\"%s\"}", petId, petName, petStatus);
         Response newPetResponse = Allure.step("Послать запрос на создание нового питомца", () -> given()
                 .baseUri(configuration.getHttpHostUrl("pet"))
