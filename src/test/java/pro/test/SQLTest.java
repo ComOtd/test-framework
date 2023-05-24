@@ -43,19 +43,32 @@ class SQLTest {
         connectionSource.statement(st -> {
             st.execute(queryUser);
         });
+        connectionSource.statement(st -> {
+            st.execute("INSERT INTO user (name,surname,doc_id) VALUES ('Иван','Иванов',777)");
+            st.execute("INSERT INTO user (name,surname,doc_id) VALUES ('Владимир','Иванов',9999)");
+            st.execute("INSERT INTO user (name,surname,doc_id) VALUES ('Виктор','Иванов',777)");
+        });
         String queryDocuments = FileUtil.getTextFileContent("sql/tableDocuments.sql");
         connectionSource.statement(st -> {
             st.execute(queryDocuments);
+        });
+        connectionSource.statement(st -> {
+            st.execute("INSERT INTO documents (doc_id, doc_series,doc_num,employee_id) VALUES (777,4444,123456,12345)");
         });
         String queryEmployee = FileUtil.getTextFileContent("sql/tableEmployee.sql");
         connectionSource.statement(st -> {
             st.execute(queryEmployee);
         });
+        connectionSource.statement(st -> {
+            st.execute("INSERT INTO employee (fullname,employee_id) VALUES ('Миханюк Лариса Аромовна',12345)");
+        });
+
     }
 
 
     @Test
     @Tag("SQL")
+    @DisplayName("Проверка имени сотрудника")
     void checkSQL() {
         Allure.step("Проверить имя сотрудника", () -> connectionSource.statement(st -> {
             String sql = "SELECT * FROM staff";
@@ -68,25 +81,8 @@ class SQLTest {
 
     @Test
     @Tag("SQL")
+    @DisplayName("Проверка default значений полей")
     void checkSQLJoin() {
-        Allure.step("Заполнить таблицы", () -> {
-            connectionSource.statement(st -> {
-                String insertUser = "INSERT INTO user (name,surname,doc_id) VALUES ('Иван','Иванов',777)";
-                Allure.addAttachment("insertUser", insertUser);
-                st.execute(insertUser);
-            });
-            connectionSource.statement(st -> {
-                String insertDocument = "INSERT INTO documents (doc_id, doc_series,doc_num,employee_id) VALUES (777,4444,123456,12345)";
-                Allure.addAttachment("insertDocument", insertDocument);
-                st.execute(insertDocument);
-            });
-            connectionSource.statement(st -> {
-                String insertEmployee = "INSERT INTO employee (fullname,employee_id) VALUES ('Миханюк Лариса Аромовна',12345)";
-                Allure.addAttachment("insertEmployee", insertEmployee);
-                st.execute(insertEmployee);
-            });
-
-        });
         Allure.step("Проверить поля с default значениями", () ->
                 connectionSource.statement(st -> {
                     String selectDefaultFields =
@@ -107,22 +103,15 @@ class SQLTest {
 
     @Test
     @Tag("SQL")
+    @DisplayName("Удаление записей")
     void deleteSQL() {
-        Allure.step("Заполнить таблицу user", () -> {
-            Allure.step("Выполнить инсерт", () -> connectionSource.statement(st -> {
-                String insertUser = "INSERT INTO user (name,surname,doc_id) VALUES ('Виктор','Иванов',777)";
-                Allure.addAttachment("insertUser", insertUser);
-                st.execute(insertUser);
-            }));
-            Allure.step("Проверить количество записей", () -> {
-
-                connectionSource.statement(st -> {
-                    String countUser = "SELECT COUNT(*) as count FROM user WHERE name = 'Виктор'";
-                    Allure.addAttachment("countUser", countUser);
-                    ResultSet resultSet = st.executeQuery(countUser);
-                    Assertions.assertTrue(resultSet.next(), "Пустой результат");
-                    Assertions.assertEquals(1, resultSet.getInt("count"), "Неверное количество записей");
-                });
+        Allure.step("Проверить количество записей в таблице user", () -> {
+            connectionSource.statement(st -> {
+                String countUser = "SELECT COUNT(*) as count FROM user WHERE name = 'Виктор'";
+                Allure.addAttachment("countUser", countUser);
+                ResultSet resultSet = st.executeQuery(countUser);
+                Assertions.assertTrue(resultSet.next(), "Пустой результат");
+                Assertions.assertEquals(1, resultSet.getInt("count"), "Неверное количество записей");
             });
         });
         Allure.step("Удалить запись", () -> {
@@ -134,7 +123,7 @@ class SQLTest {
                 st.execute(deleteUser);
             });
         });
-        Allure.step("Проверить количество записей", () -> {
+        Allure.step("Проверить количество записей в таблице user", () -> {
             connectionSource.statement(st -> {
                 String countUser = "SELECT COUNT(*) as count FROM user WHERE name = 'Виктор'";
                 Allure.addAttachment("countUser", countUser);
@@ -147,14 +136,10 @@ class SQLTest {
 
     @Test
     @Tag("SQL")
+    @DisplayName("Обновление данных в таблице")
     void updateSQL() {
         String oldName = "Владимир";
         String newName = "Всеволод";
-        Allure.step("Заполнить таблицу user", () -> connectionSource.statement(st -> {
-            String insertUser = String.format("INSERT INTO user (name,surname,doc_id) VALUES ('%s','Иванов',9999)", oldName);
-            Allure.addAttachment("insertUser", insertUser);
-            st.execute(insertUser);
-        }));
         Allure.step("Изменить имя", () -> {
             connectionSource.statement(st -> {
                 String updateUser =
