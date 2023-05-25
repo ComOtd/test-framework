@@ -1,1 +1,0 @@
-INSERT INTO user (name,surname,doc_id,create_date) VALUES ('Иван','Иванов',777,'fgnjfdnkgj')
