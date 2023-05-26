@@ -176,7 +176,7 @@ class UiTests {
     void testUpload() {
         String path = "src/test/resources/ui/";
         String fileName = "sample.txt";
-        UploadPage uploadPage = new UploadPage();
+        UploadPage uploadPage = page(UploadPage.class);
         Allure.step("Открыть страницу File Uploader", () -> {
             open(configuration.getHttpHostUrl("upload"));
             $x("//h3").shouldHave(text("File Uploader"));
@@ -194,9 +194,9 @@ class UiTests {
     @Story("Download file")
     @DisplayName("Проверка работы c загрузкой файлов")
     void testDownload() {
-        String filename = "test.txt";
-        String content = "test 1";
-        DownloadPage downloadPage = new DownloadPage();
+        String filename = "test-file.txt";
+        String content = "Test file";
+        DownloadPage downloadPage = page(DownloadPage.class);
         Allure.step("Открыть страницу File Downloader", () -> {
             open(configuration.getHttpHostUrl("download"));
             $x("//h3").shouldHave(text("File Downloader"));
